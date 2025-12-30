@@ -1,5 +1,6 @@
 import { Calendar, MoreHorizontal, Check, Pencil, Trash2 } from 'lucide-react';
 import { Task } from '@/types/task';
+import { useAuthStore } from '@/store/authStore';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -44,9 +45,13 @@ const priorityLabels = {
 };
 
 export function TaskCard({ task, onEdit, onDelete, onStatusChange, onClick }: TaskCardProps) {
+  const { user } = useAuthStore();
   const dueDate = parseISO(task.dueDate);
   const isOverdue = isPast(dueDate) && task.status !== 'completed';
   const isDueToday = isToday(dueDate);
+  
+  // Check if current user is the creator of this task
+  const isCreator = (task as any).createdBy?._id === user?.id || (task as any).createdBy?.id === user?.id;
 
   return (
     <div
@@ -68,20 +73,24 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange, onClick }: Ta
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onEdit(task); }}>
-              <Pencil className="mr-2 h-3.5 w-3.5" />
-              Edit
-            </DropdownMenuItem>
+            {isCreator && (
+              <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onEdit(task); }}>
+                <Pencil className="mr-2 h-3.5 w-3.5" />
+                Edit
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onStatusChange(task); }}>
               <Check className="mr-2 h-3.5 w-3.5" />
               {task.status === 'completed' ? 'Mark Pending' : 'Mark Complete'}
             </DropdownMenuItem>
-            <DropdownMenuItem 
-              onClick={(e) => { e.stopPropagation(); onDelete(task); }}
-            >
-              <Trash2 className="mr-2 h-3.5 w-3.5" />
-              Delete
-            </DropdownMenuItem>
+            {isCreator && (
+              <DropdownMenuItem 
+                onClick={(e) => { e.stopPropagation(); onDelete(task); }}
+              >
+                <Trash2 className="mr-2 h-3.5 w-3.5" />
+                Delete
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

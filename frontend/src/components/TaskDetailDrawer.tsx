@@ -1,5 +1,6 @@
 import { X, Calendar, Flag, Clock, Pencil, Trash2 } from 'lucide-react';
 import { Task } from '@/types/task';
+import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { format, parseISO } from 'date-fns';
@@ -25,7 +26,12 @@ const statusLabels = {
 };
 
 export function TaskDetailDrawer({ isOpen, onClose, task, onEdit, onDelete }: TaskDetailDrawerProps) {
+  const { user } = useAuthStore();
+  
   if (!task) return null;
+  
+  // Check if current user is the creator of this task
+  const isCreator = (task as any).createdBy?._id === user?.id || (task as any).createdBy?.id === user?.id;
 
   return (
     <>
@@ -40,16 +46,20 @@ export function TaskDetailDrawer({ isOpen, onClose, task, onEdit, onDelete }: Ta
             <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border">
               <h2 className="text-base sm:text-lg font-medium">Task Details</h2>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" onClick={() => onEdit(task)}>
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onDelete(task)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                {isCreator && (
+                  <>
+                    <Button variant="ghost" size="icon" onClick={() => onEdit(task)}>
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => onDelete(task)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </>
+                )}
                 <Button variant="ghost" size="icon" onClick={onClose}>
                   <X className="h-4 w-4" />
                 </Button>
@@ -132,12 +142,14 @@ export function TaskDetailDrawer({ isOpen, onClose, task, onEdit, onDelete }: Ta
               </div>
             </div>
 
-            <div className="p-4 sm:p-6 border-t border-border">
-              <Button className="w-full" onClick={() => onEdit(task)}>
-                <Pencil className="h-4 w-4 mr-2" />
-                Edit Task
-              </Button>
-            </div>
+            {isCreator && (
+              <div className="p-4 sm:p-6 border-t border-border">
+                <Button className="w-full" onClick={() => onEdit(task)}>
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit Task
+                </Button>
+              </div>
+            )}
           </div>
         </>
       )}
