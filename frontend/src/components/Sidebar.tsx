@@ -17,7 +17,6 @@ const navItems = [
   { icon: ListTodo, label: 'All Tasks', path: '/tasks' },
   { icon: CheckSquare, label: 'Assigned to Me', path: '/assigned' },
   { icon: Users, label: 'Team', path: '/team' },
-  { icon: Settings, label: 'Settings', path: '/settings' },
 ];
 
 interface SidebarProps {
@@ -58,7 +57,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           </button>
         </div>
 
-        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 p-5 space-y-5 overflow-y-auto">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
