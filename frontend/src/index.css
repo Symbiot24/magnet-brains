@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 0 0% 9%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    
+    --primary: 0 0% 15%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 45%;
+    
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
+    
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 15%;
+    
+    --radius: 0.5rem;
+    
+    --priority-high: 0 0% 30%;
+    --priority-high-bg: 0 0% 96%;
+    --priority-medium: 0 0% 50%;
+    --priority-medium-bg: 0 0% 96%;
+    --priority-low: 0 0% 70%;
+    --priority-low-bg: 0 0% 96%;
+    
+    --status-pending: 0 0% 50%;
+    --status-in-progress: 0 0% 35%;
+    --status-completed: 0 0% 20%;
+    
+    --surface-1: 0 0% 100%;
+    --surface-2: 0 0% 98%;
+    --surface-3: 0 0% 96%;
+    
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 0 0% 15%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 15%;
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+    --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.06);
+    --shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.05);
+    --shadow-xl: 0 8px 16px -4px rgb(0 0 0 / 0.08);
+    --shadow-glow: none;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 92%;
+    
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 92%;
+    
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 92%;
+    
+    --primary: 0 0% 92%;
+    --primary-foreground: 0 0% 9%;
+    
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 70%;
+    
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+    
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 92%;
+    
+    --destructive: 0 0% 70%;
+    --destructive-foreground: 0 0% 9%;
+    
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 0 0% 92%;
+    
+    --priority-high: 0 0% 75%;
+    --priority-high-bg: 0 0% 14%;
+    --priority-medium: 0 0% 55%;
+    --priority-medium-bg: 0 0% 14%;
+    --priority-low: 0 0% 40%;
+    --priority-low-bg: 0 0% 14%;
+    
+    --status-pending: 0 0% 50%;
+    --status-in-progress: 0 0% 65%;
+    --status-completed: 0 0% 80%;
+    
+    --surface-1: 0 0% 10%;
+    --surface-2: 0 0% 12%;
+    --surface-3: 0 0% 14%;
+    
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: 0 0% 92%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 0 0% 92%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 0 0% 92%;
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+    --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.25);
+    --shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.2);
+    --shadow-xl: 0 8px 16px -4px rgb(0 0 0 / 0.3);
+    --shadow-glow: none;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/30;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-card/90 backdrop-blur-sm border border-border;
+  }
+  
+  .glass-subtle {
+    @apply bg-card/70 backdrop-blur-sm border border-border/50;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-150 ease-out;
+  }
+  
+  .card-hover:hover {
+    @apply shadow-md;
+  }
+  
+  .priority-column {
+    @apply rounded-lg p-4 min-h-[calc(100vh-12rem)] transition-colors duration-150;
+  }
+  
+  .priority-high {
+    @apply bg-[hsl(var(--priority-high-bg))] border border-border;
+  }
+  
+  .priority-medium {
+    @apply bg-[hsl(var(--priority-medium-bg))] border border-border;
+  }
+  
+  .priority-low {
+    @apply bg-[hsl(var(--priority-low-bg))] border border-border;
+  }
+  
+  .task-card {
+    @apply bg-card rounded-md p-4 border border-border transition-all duration-150 ease-out cursor-pointer;
+  }
+  
+  .task-card:hover {
+    @apply shadow-sm border-foreground/20;
+  }
+  
+  .floating-label {
+    @apply absolute left-3 transition-all duration-150 pointer-events-none;
+  }
+  
+  .floating-label-active {
+    @apply -top-2.5 text-xs bg-card px-1 text-foreground;
+  }
+  
+  .status-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+  }
+  
+  .status-pending {
+    @apply bg-muted text-muted-foreground;
+  }
+  
+  .status-in-progress {
+    @apply bg-muted text-foreground/70;
+  }
+  
+  .status-completed {
+    @apply bg-muted text-foreground;
+  }
+  
+  .skeleton {
+    @apply animate-pulse bg-muted rounded;
+  }
+  
+  .focus-ring {
+    @apply focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1 focus:ring-offset-background;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply text-foreground;
+  }
+}
